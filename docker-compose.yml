@@ -2,7 +2,7 @@ version: "3.7"
 
 services: 
     web:
-      build: https://riu.global@github.com/riuGLobal
+      build: https://riu.global@github.com/riuGLobal/cezerin-web-example#qa
     ecommerce:
       build: https://riu.global@github.com/riuGLobal
 
