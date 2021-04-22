@@ -1,13 +1,31 @@
 version: "3.7"
 
 services: 
-    web:
-      build: https://riu.global@github.com/riuGLobal/cezerin-web-example#qa
-    ecommerce:
-      build: https://riu.global@github.com/riuGLobal
-
-    ## smtp
+    smtp:
+      build: https://github.com/mailhog/MailHog.git#master
     
+    ecommerce:
+      depends_on: 
+        - smtp
+      build: https://github.com/riuGlobal/cezerin2.git#feature/configs-and-dockerfile
+      environment:
+        - SMTP_HOST
+        - SMTP_PORT
+        - SMTP_SECURE
+        - DB_HOST
+        - DB_PORT
+        - DB_USER
+        - DB_PASS
+
+    web:
+      depends_on:
+        - ecommerce
+      ports: 
+        - "3000:3000"
+      build: https://github.com/riuGlobal/cezerin-web-example.git#feature/configs-dockerfile
+      environment:
+        - CLIENT_URL="http://ecommerce"
+      
     ## notifier
 
     ## loyalty
