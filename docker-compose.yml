@@ -4,13 +4,14 @@ services:
     database:
       image: mongo:latest
       ports:
-        - 207017:207017
+        - 27017:27017
       environment:
         - MONGO_INITDB_ROOT_USERNAME
         - MONGO_INITDB_ROOT_PASSWORD
 
       volumes:
         - ${HOME}/docker/volumes/mongo:/data/db
+
     smtp:
       build: https://github.com/mailhog/MailHog.git#master
       ports:
@@ -22,7 +23,7 @@ services:
         - database
       build: https://github.com/riuGlobal/cezerin2.git#feature/dockerfile
       ports:
-        - 3006:3001
+        - 3001:3001
       environment:
         - SMTP_HOST
         - SMTP_PORT
@@ -32,19 +33,18 @@ services:
         - DB_NAME
         - DB_USER
         - DB_PASS
-        - FRONT_URL=http://localhost:3012
+        - FRONT_URL=${FRONT_URL_CORS:-http://localhost:3000}
 
     web:
       depends_on:
         - ecommerce
       ports: 
-        - ${PORT:3012}:3000
+        - "${WEB_PORT:-3000}:3000"
       build: https://github.com/riuGlobal/cezerin-web-example.git#feature/configs-dockerfile
       environment:
-        # - CLIENT_URL=http://localhost:3006
-        # - SERVER_URL=http://ecommerce:3001
-        - REACT_APP_CLIENT_URL=http://192.168.0.33:3006
         - REACT_APP_SERVER_URL=http://ecommerce:3001
+        - REACT_APP_CLIENT_URL
+        
     ## notifier
 
     ## loyalty
