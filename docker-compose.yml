@@ -1,6 +1,16 @@
 version: "3.7"
 
 services: 
+    database:
+      image: mongo:latest
+      ports:
+        - 207017:207017
+      environment:
+        - MONGO_INITDB_ROOT_USERNAME
+        - MONGO_INITDB_ROOT_PASSWORD
+
+      volumes:
+        - ${HOME}/docker/volumes/mongo:/data/db
     smtp:
       build: https://github.com/mailhog/MailHog.git#master
       ports:
@@ -9,6 +19,7 @@ services:
     ecommerce:
       depends_on: 
         - smtp
+        - database
       build: https://github.com/riuGlobal/cezerin2.git#feature/dockerfile
       ports:
         - 3006:3001
