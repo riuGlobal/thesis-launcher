@@ -21,7 +21,7 @@ services:
       depends_on: 
         - smtp
         - database
-      build: https://github.com/riuGlobal/cezerin2.git#feature/dockerfile
+      build: https://github.com/riuGlobal/cezerin2.git#${ECOMMERCE_BRANCH:-master}
       ports:
         - 3001:3001
       environment:
@@ -40,7 +40,7 @@ services:
         - ecommerce
       ports: 
         - "${WEB_PORT:-3000}:3000"
-      build: https://github.com/riuGlobal/cezerin-web-example.git#feature/configs-dockerfile
+      build: https://github.com/riuGlobal/cezerin-web-example.git#${WEB_BRANCH:-master}
       environment:
         - REACT_APP_SERVER_URL=http://ecommerce:3001
         - REACT_APP_CLIENT_URL
