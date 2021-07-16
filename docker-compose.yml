@@ -5,8 +5,6 @@ services:
       build: https://github.com/mailhog/MailHog.git#master
       ports:
         - 8025:8025
-      profiles:
-        - db
     
     ecommerce:
       depends_on: 
