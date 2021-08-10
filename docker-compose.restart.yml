@@ -1,0 +1,12 @@
+services:
+    ecommerce:
+      restart: unless-stopped
+
+    web:
+      restart: unless-stopped
+
+    admin:
+      restart: unless-stopped
+    
+    smtp:
+      restart: unless-stopped
