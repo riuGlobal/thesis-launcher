@@ -1,17 +1,6 @@
 version: "3.8"
 
 services: 
-    database:
-      image: mongo:4.4
-      ports:
-        - 27017:27017
-      environment:
-        - MONGO_INITDB_ROOT_USERNAME
-        - MONGO_INITDB_ROOT_PASSWORD
-
-      volumes:
-        - ${HOME}/docker/volumes/mongo:/data/db
-
     smtp:
       build: https://github.com/mailhog/MailHog.git#master
       ports:
@@ -20,10 +9,11 @@ services:
     ecommerce:
       depends_on: 
         - smtp
-        - database
+        # - database
       build: https://github.com/riuGlobal/cezerin2.git#${ECOMMERCE_BRANCH:-master}
       ports:
-        - 3001:3001
+        - 8016:3001
+        - 8017:3000
       environment:
         - SMTP_HOST
         - SMTP_PORT
@@ -43,7 +33,18 @@ services:
       build: https://github.com/riuGlobal/cezerin-web-example.git#${WEB_BRANCH:-master}
       environment:
         - REACT_APP_SERVER_URL=http://ecommerce:3001
-        - REACT_APP_CLIENT_URL
+        - REACT_APP_CLIENT_URL=${WEB_CLIENT_URL}
+
+    admin:
+      depends_on: 
+        - ecommerce
+      ports: 
+        - "${ADMIN_PORT:-3001}:3000"
+      build: https://github.com/riuGlobal/cezerin-admin.git#${ADMIN_BRANCH:-master}
+      environment:
+        - REACT_APP_CLIENT_URL=${ADMIN_CLIENT_URL}
+        - REACT_APP_WEB_SOCKET=${ADMIN_WEB_SOCKET}
+
         
     ## notifier
 
