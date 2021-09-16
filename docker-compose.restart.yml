@@ -1,4 +1,10 @@
 services:
+    loyalty-cards:
+      restart: unless-stopped
+
+    loyalty-cards-cezerin-middleware:
+      restart: unless-stopped
+
     ecommerce:
       restart: unless-stopped
 

@@ -1,0 +1,19 @@
+services: 
+  db-pg:
+    image: postgres:13-alpine
+    restart: unless-stopped
+    ports:
+      - 15432:5432
+    environment:
+      - POSTGRES_USER=${PG_DB_USER}
+      - POSTGRES_PASSWORD=${PG_DB_PASSWORD}
+    volumes:
+      - ${PWD}/pg-data:/var/lib/postgresql/data
+
+  loyalty-cards:  
+    depends_on:
+      - db-pg
+
+  loyalty-cards-cezerin-middleware:
+    depends_on:
+      - db-pg
