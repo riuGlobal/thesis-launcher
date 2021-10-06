@@ -3,20 +3,20 @@ version: "3.8"
 services: 
 
   loyalty-cards-admin:
-    build: git@github.com:riuGlobal/loyalty-cards-admin.git#${LOYALTY_CARDS_ADMIN_VERSION:-master}
+    build: https://github.com/riuGlobal/loyalty-cards-admin.git#${LOYALTY_CARDS_ADMIN_VERSION:-master}
     ports:
       - 3003:3000
     environment:
       - ESLINT_NO_DEV_ERRORS
       - REACT_APP_LOYALTY_CARDS_API_HOST=${LOYALTY_CARDS_API_HOST}
   loyalty-cards-web:
-    build: git@github.com:riuGlobal/loyalty-cards-web.git#${LOYALTY_CARDS_WEB_VERSION:-master}
+    build: https://github.com/riuGlobal/loyalty-cards-web.git#${LOYALTY_CARDS_WEB_VERSION:-master}
     ports:
       - 3002:3000
     environment:
       - REACT_APP_LOYALTY_CARDS_API_HOST=${LOYALTY_CARDS_API_HOST}
   loyalty-cards:
-    build: git@github.com:riuGlobal/loyalty-cards.git#${LOYALTY_CARDS_VERSION:-master}
+    build: https://github.com/riuGlobal/loyalty-cards.git#${LOYALTY_CARDS_VERSION:-master}
     ports:
       - 8030:8000
     environment:
@@ -34,7 +34,7 @@ services:
   #   build
 
   loyalty-cards-cezerin-middleware:
-    build: git@github.com:riuGlobal/loyalty-cards-cezerin-middleware.git#${LOYALTY_CARDS_CEZERIN_MW_VERSION:-master}
+    build: https://github.com/riuGlobal/loyalty-cards-cezerin-middleware.git#${LOYALTY_CARDS_CEZERIN_MW_VERSION:-master}
     ports:
       - 8031:8000
     environment:
